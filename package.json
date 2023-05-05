@@ -1,0 +1,28 @@
+{
+  "name": "crawler",
+  "version": "1.0.0",
+  "description": ":beers: 爬虫",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "DEBUG=app:* tsx src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QinZhen001/crawler.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/QinZhen001/crawler/issues"
+  },
+  "homepage": "https://github.com/QinZhen001/crawler#readme",
+  "devDependencies": {
+    "tsx": "^3.12.7"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "cheerio": "^1.0.0-rc.12",
+    "debug": "^4.3.4"
+  }
+}
