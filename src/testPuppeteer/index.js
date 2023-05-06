@@ -9,7 +9,7 @@ const __dirname = dirname(__filename);
 
 const pdfPath = resolve(__dirname, '../data/test.pdf')
 const screenshotPath = resolve(__dirname, '../data/screenshot.png')
-
+const htmlPath = resolve(__dirname, '../data/message.html')
 
 
 
@@ -47,6 +47,14 @@ const testEvaluate = async (browser) => {
   console.log(body);
   // console.log(three);
 }
+
+const testHtml = async (url) => {
+  // const res = await apiGetData(url)
+  // log("write start")
+  // await writeFile(htmlPath, res);
+  // log("write end")
+}
+
 
 
 // main test function
