@@ -1,6 +1,7 @@
 import puppeteer from "puppeteer";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from 'node:url'
+import { apiGetData } from "../utils/index";
 import debug from "debug";
 
 const log = debug("app:pupeeteer");
@@ -62,9 +63,9 @@ const test = async () => {
   // headless: "new
   const browser = await puppeteer.launch();
   // await testVersion(browser)
-  // await testPdf(browser)
+  await testPdf(browser)
   // await testScreenshot(browser)
-  await testEvaluate(browser)
+  // await testEvaluate(browser)
   await browser.close();
 }
 
