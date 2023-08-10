@@ -1,16 +1,15 @@
 import puppeteer from "puppeteer";
 import { resolve, dirname } from "node:path";
-import { fileURLToPath } from 'node:url'
 import { apiGetData } from "../utils/index";
+import { __srcname } from "../utils/index";
 import debug from "debug";
 
 const log = debug("app:pupeeteer");
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
-const pdfPath = resolve(__dirname, '../data/test.pdf')
-const screenshotPath = resolve(__dirname, '../data/screenshot.png')
-const htmlPath = resolve(__dirname, '../data/message.html')
+
+const pdfPath = resolve(__srcname, './data/test.pdf')
+const screenshotPath = resolve(__srcname, './data/screenshot.png')
+const htmlPath = resolve(__srcname, './data/message.html')
 
 
 
@@ -71,3 +70,51 @@ const test = async () => {
 
 
 export default test
+
+
+client.on("stream-message", (uid, data) => {
+  data = JSON.parse(Uint8ArrayToString(data))
+  let { type, songCode, status, position = 0, realPosition = 0, ntp } = data
+  if (!type) {
+    return
+  }
+  console.log("stream-message received", data)
+  switch (type) {
+    case 4:
+      // 转态改变
+      let newTime = position / 1000
+      newTime = newTime > 0 ? newTime : 0
+      if (this.status == ENMU_BGM_STATUS.IDLE) {
+        if (this.role == "audience") {
+          // 观众
+          // 使用 realPosition
+          realPosition = realPosition / 1000
+          realPosition = realPosition > 0 ? realPosition : 0
+          realPosition = realPosition - (window.renderDelay / 1000)
+          if (Math.abs(this.currentTime - realPosition) > 1000) {
+            return
+          }
+          this.currentTime = realPosition
+          engine.setTime(this.currentTime);
+          if (intervalId) {
+            clearInterval(intervalId)
+            intervalId = null
+          }
+          intervalId = setInterval(() => {
+            if ((this.currentTime + 0.02) > engine.totalTime) {
+              clearInterval(intervalId)
+              intervalId = null
+              return
+            }
+            this.currentTime += 0.02
+            engine.setTime(this.currentTime);
+          }, 20)
+        } else {
+          // 伴唱
+          // 未开始时记录远端主唱进度
+          this.currentTime = newTime
+        }
+      }
+      break
+  }
+});

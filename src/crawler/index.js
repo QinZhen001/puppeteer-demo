@@ -1,14 +1,12 @@
 import puppeteer from "puppeteer";
-import { resolve, dirname } from "node:path";
-import { fileURLToPath } from 'node:url'
+import { resolve } from "node:path";
 import { writeFile } from "node:fs/promises";
+import { __rootname, __srcname } from "../utils/index"
 
 const url = 'https://juejin.cn/books';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const pngPath = resolve(__dirname, '../../other/yoursite.png')
-const dataPath = resolve(__dirname, '../data/data.json')
+const pngPath = resolve(__rootname, './other/yoursite.png')
+const dataPath = resolve(__srcname, './data/data.json')
 
 // title lastedPrice
 let result = []
